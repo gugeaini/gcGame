@@ -7,7 +7,7 @@ class GameProtocol:
 {
 	std::string szCacheData;	//tcp传送过来的数据
 public:
-	GameChannel* poChannel = NULL;
+	GameChannel* poChannel = NULL;	//绑定向下层传输的通道对象
 
 	// 通过 Iprotocol 继承
 	virtual UserData* raw2request(std::string _szInput) override;

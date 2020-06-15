@@ -5,7 +5,7 @@ class GameChannel:
 	public ZinxTcpData
 {
 public:
-	GameProtocol* poProtocol = nullptr;
+	GameProtocol* poProtocol = nullptr;	//绑定向上层传输协议对象
 	GameChannel(int _fd);
 	// 通过 ZinxTcpData 继承
 	virtual AZinxHandler* GetInputNextStage(BytesMsg& _oInput) override;
