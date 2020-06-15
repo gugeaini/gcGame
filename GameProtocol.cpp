@@ -40,20 +40,6 @@ UserData* GameProtocol::raw2request(std::string _szInput)
 		szCacheData.erase(0, 8 + ilen);
 	}
 
-	/*协议类测试代码*/
-#if 1
-	for (auto sign : pRet->m_GameMsg_list)
-	{
-		cout << sign->poMessage->Utf8DebugString() << endl;
-	}
-	auto pot = new pb::Talk();
-	pot->set_content("hello");
-	auto tsetMsg01 = new GameMsg(GameMsg::MSG_TYPE_TALK, pot);
-	ZinxKernel::Zinx_SendOut(*tsetMsg01, *this);
-#endif // 0
-
-	
-
 	return pRet;
 }
 

@@ -45,7 +45,7 @@ public:
 	std::vector<Grid>m_grid_vector;		//游戏世界所有网格
 
 public:
-	AOIWrold(int _xb, int _xe, int _xc, int _yb, int _ye, int _yc);
+	AOIWrold(int _x_begin, int _x_end, int _x_count, int _y_begin, int _y_end, int _y_count);
 	virtual ~AOIWrold();
 
 	/*获取周围玩家*/

@@ -32,50 +32,53 @@ std::list<Player*> AOIWrold::GetSrdPlayers(Player* _player)
 	//	1
 	if (x_index > 0 && y_index > 0)
 	{
-		auto& sign = m_grid_vector[grid_id - 1 - x_count].m_player_list;
-		ret.insert(ret.end(), sign.begin(), sign.end());
+		list<Player*>& sign = m_grid_vector[grid_id - 1 - x_count].m_player_list;
+		ret.insert(ret.begin(), sign.begin(), sign.end());
 	}
 	//	2
 	if (y_index > 0)
 	{
-		auto& sign = m_grid_vector[grid_id - x_count].m_player_list;
-		ret.insert(ret.end(), sign.begin(), sign.end());
+		list<Player*>& sign = m_grid_vector[grid_id - x_count].m_player_list;
+		ret.insert(ret.begin(), sign.begin(), sign.end());
 	}
 	//	3
 	if (x_index + 1 < x_count && y_index > 0)
 	{
-		auto& sign = m_grid_vector[grid_id + 1  - x_count].m_player_list;
-		ret.insert(ret.end(), sign.begin(), sign.end());
+		list<Player*>& sign = m_grid_vector[grid_id + 1  - x_count].m_player_list;
+		ret.insert(ret.begin(), sign.begin(), sign.end());
 	}
 	//	4
 	if (x_index > 0)
 	{
-		auto& sign = m_grid_vector[grid_id - 1].m_player_list;
-		ret.insert(ret.end(), sign.begin(), sign.end());
+		list<Player*>& sign = m_grid_vector[grid_id - 1].m_player_list;
+		ret.insert(ret.begin(), sign.begin(), sign.end());
 	}
-	// 6
+	//	5
+	list<Player*>& sign = m_grid_vector[grid_id].m_player_list;
+	ret.insert(ret.begin(), sign.begin(), sign.end());
+	//	6
 	if (x_index + 1 < x_count)
 	{
-		auto& sign = m_grid_vector[grid_id + 1].m_player_list;
-		ret.insert(ret.end(), sign.begin(), sign.end());
+		list<Player*>& sign = m_grid_vector[grid_id + 1].m_player_list;
+		ret.insert(ret.begin(), sign.begin(), sign.end());
 	}
 	//	7
 	if (x_index > 0 && y_index + 1 < y_count)
 	{
-		auto& sign = m_grid_vector[grid_id - 1 + x_count].m_player_list;
-		ret.insert(ret.end(), sign.begin(), sign.end());
+		list<Player*>& sign = m_grid_vector[grid_id - 1 + x_count].m_player_list;
+		ret.insert(ret.begin(), sign.begin(), sign.end());
 	}
 	//	8
 	if (y_index + 1 < y_count)
 	{
-		auto& sign = m_grid_vector[grid_id + x_count].m_player_list;
-		ret.insert(ret.end(), sign.begin(), sign.end());
+		list<Player*>& sign = m_grid_vector[grid_id + x_count].m_player_list;
+		ret.insert(ret.begin(), sign.begin(), sign.end());
 	}
 	//	9
 	if (x_index + 1 < x_count && y_index + 1 < y_count)
 	{
-		auto& sign = m_grid_vector[grid_id + 1 + x_count].m_player_list;
-		ret.insert(ret.end(), sign.begin(), sign.end());
+		list<Player*>& sign = m_grid_vector[grid_id + 1 + x_count].m_player_list;
+		ret.insert(ret.begin(), sign.begin(), sign.end());
 	}
 	return ret;
 }
