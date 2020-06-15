@@ -11,13 +11,13 @@ AZinxHandler* GameChannel::GetInputNextStage(BytesMsg& _oInput)
 
 ZinxTcpData* GameTcpFact::CreateTcpDataChannel(int _fd)
 {
-	/*创建tcp通道对象*/
+	/*鍒涘缓tcp閫氶亾瀵硅薄*/
 	auto poChannel = new GameChannel(_fd);
 
-	/*创建protoc协议对象*/
+	/*鍒涘缓protoc鍗忚瀵硅薄*/
 	auto poProto = new GameProtocol();
 
-	/*绑定*/
+	/*缁戝畾*/
 	poChannel->poProtocol = poProto;
 	ZinxKernel::Zinx_Add_Proto(*poProto);
 	

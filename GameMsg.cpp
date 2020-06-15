@@ -31,9 +31,9 @@ GameMsg::GameMsg(MSG_TYPE _type, std::string _outData):MsgType(_type)
         break;
 	}
 
-    poMessage->ParseFromString(_outData);//·´ĞòÁĞ»¯
+    poMessage->ParseFromString(_outData);//ååºåˆ—åŒ–
 }
-/*str²»ÊÇ¶Ñ¶ÔÏó¿ÉÄÜ»áÓĞÎÊÌâ*/
+/*strä¸æ˜¯å †å¯¹è±¡å¯èƒ½ä¼šæœ‰é—®é¢˜*/
 std::string GameMsg::GetSerialize()
 {
     std::string str;

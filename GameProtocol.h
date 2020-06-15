@@ -5,7 +5,7 @@ class GameProtocol:
 {
 public:
 
-	// Í¨¹ý Iprotocol ¼Ì³Ð
+	// é€šè¿‡ Iprotocol ç»§æ‰¿
 	virtual UserData* raw2request(std::string _szInput) override;
 	virtual std::string* response2raw(UserData& _oUserData) override;
 	virtual Irole* GetMsgProcessor(UserDataMsg& _oUserDataMsg) override;

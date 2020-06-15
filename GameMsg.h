@@ -8,22 +8,22 @@ class GameMsg:
 public:
 	enum MSG_TYPE
 	{
-		MSG_TYPE_SYNCPID_LOGIN=1,		//Íæ¼ÒID+Íæ¼ÒÐÕÃû
-		MSG_TYPE_TALK=2,				//ÁÄÌìÄÚÈÝ
-		MSG_TYPE_POSITION=3,			//ÐÂÎ»ÖÃ
-		MSG_TYPE_BROADCAST=200,		//Íæ¼ÒID,ÁÄÌìÄÚÈÝ/³õÊ¼Î»ÖÃ/¶¯×÷/ÐÂÎ»ÖÃ ÏòÍâ·¢ËÍµÄ¹ã²¥ÇëÇó
-		MSG_TYPE_SYNCPID_LOGOFF=201,	//Íæ¼ÒIDºÍÍæ¼ÒÐÕÃû
-		MSG_TYPE_SYNCPLAYERS=202		//ÖÜÎ§Íæ¼ÒÃÇµÄÎ»ÖÃ
+		MSG_TYPE_SYNCPID_LOGIN=1,		//çŽ©å®¶ID+çŽ©å®¶å§“å
+		MSG_TYPE_TALK=2,				//èŠå¤©å†…å®¹
+		MSG_TYPE_POSITION=3,			//æ–°ä½ç½®
+		MSG_TYPE_BROADCAST=200,		//çŽ©å®¶ID,èŠå¤©å†…å®¹/åˆå§‹ä½ç½®/åŠ¨ä½œ/æ–°ä½ç½® å‘å¤–å‘é€çš„å¹¿æ’­è¯·æ±‚
+		MSG_TYPE_SYNCPID_LOGOFF=201,	//çŽ©å®¶IDå’ŒçŽ©å®¶å§“å
+		MSG_TYPE_SYNCPLAYERS=202		//å‘¨å›´çŽ©å®¶ä»¬çš„ä½ç½®
 	}MsgType;
 	google::protobuf::Message* poMessage;
 
 public:
-	/*¸ù¾Ý¾ßÌåµÄÏûÏ¢¹¹½¨¶ÔÏó*/
+	/*æ ¹æ®å…·ä½“çš„æ¶ˆæ¯æž„å»ºå¯¹è±¡*/
 	GameMsg(MSG_TYPE _type, google::protobuf::Message* _msg);
-	/*¸ù¾ÝÐòÁÐ»¯µÄÏûÏ¢¹¹½¨¶ÔÏó*/
+	/*æ ¹æ®åºåˆ—åŒ–çš„æ¶ˆæ¯æž„å»ºå¯¹è±¡*/
 	GameMsg(MSG_TYPE _type, std::string _outData);
 
-	/*°ÑÏûÏ¢ÐòÁÐ»¯*/
+	/*æŠŠæ¶ˆæ¯åºåˆ—åŒ–*/
 	std::string GetSerialize();
 
 	virtual ~GameMsg();
