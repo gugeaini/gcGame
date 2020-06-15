@@ -19,6 +19,7 @@ ZinxTcpData* GameTcpFact::CreateTcpDataChannel(int _fd)
 
 	/*°ó¶¨*/
 	poChannel->poProtocol = poProto;
+	ZinxKernel::Zinx_Add_Proto(*poProto);
 	
 	return poChannel;
 }

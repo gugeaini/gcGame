@@ -78,6 +78,7 @@
     <ClCompile Include="GameChannel.cpp" />
     <ClCompile Include="GameProtocol.cpp" />
     <ClCompile Include="GameRole.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameChannel.h" />

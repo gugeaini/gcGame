@@ -1,7 +1,10 @@
 #include "GameProtocol.h"
+#include<iostream>
+using namespace std;
 
 UserData* GameProtocol::raw2request(std::string _szInput)
 {
+	cout << _szInput << endl;
 	return nullptr;
 }
 
