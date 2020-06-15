@@ -1,10 +1,12 @@
 #pragma once
 #include<ZinxTCP.h>
+#include"GameProtocol.h"
 class GameChannel:
 	public ZinxTcpData
 {
 public:
-
+	GameProtocol* poProtocol = nullptr;
+	GameChannel(int _fd);
 	// 通过 ZinxTcpData 继承
 	virtual AZinxHandler* GetInputNextStage(BytesMsg& _oInput) override;
 };
@@ -12,7 +14,6 @@ public:
 class GameTcpFact :
 	public IZinxTcpConnFact
 {
-	GameChannel* poTcp;
 public:
 
 	// 通过 IZinxTcpConnFact 继承
