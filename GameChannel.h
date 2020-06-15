@@ -1,10 +1,12 @@
 #pragma once
 #include<ZinxTCP.h>
-#include"GameProtocol.h"
+
+class GameProtocol;
 class GameChannel:
 	public ZinxTcpData
 {
 public:
+	virtual ~GameChannel();
 	GameProtocol* poProtocol = nullptr;	//绑定向上层传输协议对象
 	GameChannel(int _fd);
 	// 通过 ZinxTcpData 继承

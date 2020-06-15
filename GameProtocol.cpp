@@ -3,7 +3,18 @@
 #include"GameMsg.h"
 #include"GameChannel.h"
 #include"msg.pb.h"
+#include"GameRole.h"
 using namespace std;
+
+GameProtocol::~GameProtocol()
+{
+	if (poRole != nullptr)
+	{
+		ZinxKernel::Zinx_Del_Role(*poRole);
+		delete poRole;
+		poRole = nullptr;
+	}
+}
 
 UserData* GameProtocol::raw2request(std::string _szInput)
 {
