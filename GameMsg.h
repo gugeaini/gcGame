@@ -2,6 +2,8 @@
 #include<zinx.h>
 #include<string>
 #include<google/protobuf/message.h>
+#include<list>
+/*单条消息*/
 class GameMsg:
 	public UserData
 {
@@ -30,3 +32,10 @@ public:
 
 };
 
+/*多条消息*/
+class MuiltMsg :
+	public UserData
+{
+public:
+	std::list<GameMsg*> m_GameMsg_list;
+};

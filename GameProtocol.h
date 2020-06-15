@@ -1,9 +1,13 @@
 #pragma once
 #include<zinx.h>
+#include<string>
+class GameChannel;
 class GameProtocol:
 	public Iprotocol
 {
+	std::string szCacheData;	//tcp传送过来的数据
 public:
+	GameChannel* poChannel = NULL;
 
 	// 通过 Iprotocol 继承
 	virtual UserData* raw2request(std::string _szInput) override;

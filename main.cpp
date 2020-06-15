@@ -21,7 +21,7 @@ void tsetMsg()
 	for (auto sign : str)
 	{
 		
-		printf("%02X ", sign);
+		printf("%02X", sign);
 	}
 	puts("");
 	
@@ -36,7 +36,7 @@ void tsetMsg()
 
 int main()
 {
-#if 1
+#if 0
 	tsetMsg();
 #endif // 1
 
