@@ -5,9 +5,11 @@
 #include"msg.pb.h"
 #include<iostream>
 #include<algorithm>
+#include<random>
 using namespace std;
 
 static AOIWrold* aoiw = new AOIWrold(0, 400, 20, 0, 400, 20);
+static default_random_engine random_engine(time(NULL));
 
 void GameRole::ProcChatTalk(std::string _content)
 {
@@ -154,17 +156,16 @@ GameMsg* GameRole::CreateLogoffName()
 	return new GameMsg(GameMsg::MSG_TYPE_SYNCPID_LOGOFF,pRet);
 }
 
+
 GameRole::GameRole()
 {
-	x = 150;
-	z = 150;
 	szName = "GUGE";
+	x = 100 + random_engine() % 50;
+	z = 100 + random_engine() % 50;
 }
-
 GameRole::~GameRole()
 {
 }
-
 bool GameRole::Init()
 {
 	bool bRet = false;
@@ -230,7 +231,6 @@ int GameRole::GetX()
 {
 	return (int)x;
 }
-
 int GameRole::GetY()
 {
 	return (int)z;

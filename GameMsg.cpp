@@ -43,4 +43,26 @@ std::string GameMsg::GetSerialize()
 
 GameMsg::~GameMsg()
 {
+    if (poMessage != nullptr)
+    {
+        delete poMessage;
+        poMessage = nullptr;
+    }
+}
+
+MuiltMsg::MuiltMsg()
+{
+ 
+}
+
+MuiltMsg::~MuiltMsg()
+{
+    for (auto sign : m_GameMsg_list)
+    {
+        auto temp = sign;
+        m_GameMsg_list.remove(sign);
+        delete temp;
+        temp = nullptr;
+    }
+ 
 }

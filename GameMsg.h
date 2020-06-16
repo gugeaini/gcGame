@@ -37,5 +37,7 @@ class MuiltMsg :
 	public UserData
 {
 public:
+	MuiltMsg();
+	virtual ~MuiltMsg();
 	std::list<GameMsg*> m_GameMsg_list;
 };
