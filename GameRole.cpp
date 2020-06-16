@@ -7,8 +7,10 @@
 #include<algorithm>
 #include<random>
 #include"TimerChannel.h"
+#include"RandomName.h"
 using namespace std;
 
+RandomName random_Name;
 static AOIWrold* aoiw = new AOIWrold(0, 400, 20, 0, 400, 20);
 static default_random_engine random_engine(time(NULL));
 class ExitTimer :
@@ -176,12 +178,13 @@ GameMsg* GameRole::CreateLogoffName()
 
 GameRole::GameRole()
 {
-	szName = "GUGE";
+	szName = random_Name.GetName();
 	x = 100 + random_engine() % 50;
 	z = 100 + random_engine() % 50;
 }
 GameRole::~GameRole()
 {
+	random_Name.AlosName(szName);
 }
 bool GameRole::Init()
 {

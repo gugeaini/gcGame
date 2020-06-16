@@ -8,11 +8,13 @@
 #include"msg.pb.h"
 #include"AOIWrold.h"
 #include"TimerChannel.h"
+#include"RandomName.h"
 using namespace std;
-
+extern RandomName random_Name;
 
 int main()
 {
+	random_Name.LoadFile();
 
 	ZinxKernel::ZinxKernelInit();
 
