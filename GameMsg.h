@@ -17,7 +17,7 @@ public:
 		MSG_TYPE_SYNCPID_LOGOFF=201,	//玩家ID和玩家姓名
 		MSG_TYPE_SYNCPLAYERS=202		//周围玩家们的位置
 	}MsgType;
-	google::protobuf::Message* poMessage;
+	google::protobuf::Message* poMessage = nullptr;
 
 public:
 	/*根据具体的消息构建对象*/

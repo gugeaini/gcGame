@@ -33,7 +33,7 @@ GameMsg::GameMsg(MSG_TYPE _type, std::string _outData):MsgType(_type)
 
     poMessage->ParseFromString(_outData);//反序列化
 }
-/*str不是堆对象可能会有问题*/
+
 std::string GameMsg::GetSerialize()
 {
     std::string str;
@@ -43,10 +43,10 @@ std::string GameMsg::GetSerialize()
 
 GameMsg::~GameMsg()
 {
+   /*注意不能直接析构poMessage需要强转*/
     if (poMessage != nullptr)
-    {
+    {    
         delete poMessage;
-        poMessage = nullptr;
     }
 }
 
@@ -57,12 +57,11 @@ MuiltMsg::MuiltMsg()
 
 MuiltMsg::~MuiltMsg()
 {
-    for (auto sign : m_GameMsg_list)
+    for (auto it=m_GameMsg_list.begin();it!=m_GameMsg_list.end();)
     {
-        auto temp = sign;
-        m_GameMsg_list.remove(sign);
+        auto temp = *it;
         delete temp;
-        temp = nullptr;
+        it = m_GameMsg_list.erase(it);
     }
  
 }

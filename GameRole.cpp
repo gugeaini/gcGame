@@ -39,13 +39,15 @@ void GameRole::ProcChatTalk(std::string _content)
 		auto* pBr = new pb::BroadCast();
 		pBr->set_pid(pid);
 		pBr->set_username(szName);
-		pBr->set_allocated_content(&_content);
 		pBr->set_tp(1);
+		pBr->set_content(_content);
 		/*构造聊天消息类和动态转换发送对象*/
 		auto pGameRole=dynamic_cast<GameRole*>(sign);
+
 		auto pGameMsg = new GameMsg(GameMsg::MSG_TYPE_BROADCAST, pBr);
 		/*发送*/
 		ZinxKernel::Zinx_SendOut(*pGameMsg, *(pGameRole->poProtocol));	
+
 	}
 }
 void GameRole::ProcNewLocation(int _x, int _y, int _z, int _v)

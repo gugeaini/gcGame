@@ -2,7 +2,7 @@
 #include<random>
 #include<fstream>
 
-static default_random_engine random_engine;
+static default_random_engine random_engine(time(NULL));
 
 RandomName::~RandomName()
 {
@@ -15,11 +15,11 @@ RandomName::~RandomName()
 
 string RandomName::GetName()
 {
-	int numFirst = random_engine() % m_Last_First.size();
-	int numLast = random_engine() % (m_Last_First[numFirst]->m_szData.size());
+	int numFirst = random_engine() % m_Last_First.size();	//头随机值
+	int numLast = random_engine() % (m_Last_First[numFirst]->m_szData.size());	//尾随机值
 
-	auto first = m_Last_First[numFirst]->m_First;
-	auto last = m_Last_First[numFirst]->m_szData[numLast];
+	auto first = m_Last_First[numFirst]->m_First;	//头
+	auto last = m_Last_First[numFirst]->m_szData[numLast];	//尾
 	
 	/*摘除名字*/
 	m_Last_First[numFirst]->m_szData.erase(m_Last_First[numFirst]->m_szData.begin() + numLast);
