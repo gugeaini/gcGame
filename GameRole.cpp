@@ -6,10 +6,27 @@
 #include<iostream>
 #include<algorithm>
 #include<random>
+#include"TimerChannel.h"
 using namespace std;
 
 static AOIWrold* aoiw = new AOIWrold(0, 400, 20, 0, 400, 20);
 static default_random_engine random_engine(time(NULL));
+class ExitTimer :
+	public TimerOutProc
+{
+public:
+
+	// 通过 TimerOutProc 继承
+	virtual void Proc() override
+	{
+		ZinxKernel::Zinx_Exit();
+	}
+	virtual int GetTimerSec() override
+	{
+		return 5;
+	}
+}et;
+
 
 void GameRole::ProcChatTalk(std::string _content)
 {
@@ -168,6 +185,15 @@ GameRole::~GameRole()
 }
 bool GameRole::Init()
 {
+	/*摘除定时器任务*/
+	auto pTimerChannel = ZinxKernel::Zinx_GetChannel_ByInfo("timerFd");
+	if (nullptr != pTimerChannel)
+	{
+		MngTimer::GetMngTimer()->Timer_Del_Proc(&et);
+		ZinxKernel::Zinx_Del_Channel(*pTimerChannel);
+	}
+	
+
 	bool bRet = false;
 	pid = poProtocol->poChannel->GetFd();
 	/*登录成功*/
@@ -224,6 +250,13 @@ void GameRole::Fini()
 	{
 		auto aqProtocol = dynamic_cast<GameRole*>(sign)->poProtocol;
 		ZinxKernel::Zinx_SendOut(*(CreateLogoffName()),*aqProtocol);
+	}
+
+	if (ZinxKernel::Zinx_GetAllRole().size() <= 1)
+	{
+		/*启动退出定时器*/
+		ZinxKernel::Zinx_Add_Channel(*(new TimerChannel()));
+		MngTimer::GetMngTimer()->Timer_Add_Proc(&et);
 	}
 }
 
