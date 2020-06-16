@@ -32,7 +32,7 @@ string RandomName::GetName()
 
 	}
 
-	return last + " " + first;
+	return first + " " + last;
 }
 
 void RandomName::AlosName(string _name)
