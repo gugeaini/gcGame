@@ -23,7 +23,7 @@ public:
 	}
 	virtual int GetTimerSec() override
 	{
-		return 5;
+		return 10;
 	}
 }et;
 
@@ -186,11 +186,9 @@ GameRole::~GameRole()
 bool GameRole::Init()
 {
 	/*摘除定时器任务*/
-	auto pTimerChannel = ZinxKernel::Zinx_GetChannel_ByInfo("timerFd");
-	if (nullptr != pTimerChannel)
+	if (ZinxKernel::Zinx_GetAllRole().size() <= 2)
 	{
 		MngTimer::GetMngTimer()->Timer_Del_Proc(&et);
-		ZinxKernel::Zinx_Del_Channel(*pTimerChannel);
 	}
 	
 
@@ -255,7 +253,6 @@ void GameRole::Fini()
 	if (ZinxKernel::Zinx_GetAllRole().size() <= 1)
 	{
 		/*启动退出定时器*/
-		ZinxKernel::Zinx_Add_Channel(*(new TimerChannel()));
 		MngTimer::GetMngTimer()->Timer_Add_Proc(&et);
 	}
 }
