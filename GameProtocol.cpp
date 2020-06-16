@@ -82,7 +82,7 @@ std::string* GameProtocol::response2raw(UserData& _oUserData)
 
 Irole* GameProtocol::GetMsgProcessor(UserDataMsg& _oUserDataMsg)
 {
-	return nullptr;
+	return poRole;
 }
 
 Ichannel* GameProtocol::GetMsgSender(BytesMsg& _oBytes)

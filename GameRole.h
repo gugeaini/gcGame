@@ -16,7 +16,11 @@ class GameRole:
 	int pid;
 	std::string szName;
 
-	
+	void ProcChatTalk(std::string _content);	/*聊天内容处理*/
+	void ProcNewLocation(int _x,int _y,int _z,int _v);	/*移动处理*/
+	void ProcVisualDisaAppears(GameRole* _role);		/*处理视野消失*/
+	void ProcVisualAppears(GameRole* _role);			/*处理视野出现*/
+
 	GameMsg* CreateLoginIdName();	/*向自己发送自己的Id 和 姓名 */
 	GameMsg* CreateSrdPlayers();	/*向自己发送周围玩家的位置*/
 	GameMsg* CreateSelfPostion();	/*向周围玩家发送自己的位置*/

@@ -3,9 +3,105 @@
 #include"GameChannel.h"
 #include"GameMsg.h"
 #include"msg.pb.h"
+#include<iostream>
+#include<algorithm>
+using namespace std;
 
 static AOIWrold* aoiw = new AOIWrold(0, 400, 20, 0, 400, 20);
 
+void GameRole::ProcChatTalk(std::string _content)
+{
+	/*发送聊天内容给每一位玩家*/
+	for (auto sign : ZinxKernel::Zinx_GetAllRole())
+	{
+		/*组织聊天消息类*/
+		auto* pBr = new pb::BroadCast();
+		pBr->set_pid(pid);
+		pBr->set_username(szName);
+		pBr->set_allocated_content(&_content);
+		pBr->set_tp(1);
+		/*构造聊天消息类和动态转换发送对象*/
+		auto pGameRole=dynamic_cast<GameRole*>(sign);
+		auto pGameMsg = new GameMsg(GameMsg::MSG_TYPE_BROADCAST, pBr);
+		/*发送*/
+		ZinxKernel::Zinx_SendOut(*pGameMsg, *(pGameRole->poProtocol));	
+	}
+}
+void GameRole::ProcNewLocation(int _x, int _y, int _z, int _v)
+{
+	/*	位置移动需要处理旧位置的摘除和新位置的插入以及视野的变化
+		对周围出现的新格子进行发送出现消息
+		对周围消失的旧格子进行发送消失消息*/
+	/* s1旧集合*/
+	auto s1 = aoiw->GetSrdPlayers(this);
+	aoiw->DelPlayer(this);
+	x = _x;
+	y = _y;
+	z = _z;
+	v = _v;
+	aoiw->AddPlayer(this);
+	/* s2新集合*/
+	auto s2 = aoiw->GetSrdPlayers(this);
+
+	for (auto sign : s1)
+	{
+		if (s2.end() == find(s2.begin(), s2.end(), sign))
+		{
+			/*视野消失*/
+			auto pGameRole = dynamic_cast<GameRole*>(sign);
+			if (pGameRole != this)
+			{
+				ProcVisualDisaAppears(pGameRole);
+			}
+			
+		}
+	}
+	for (auto sign : s2)
+	{
+		if (s1.end() == find(s1.begin(), s1.end(), sign))
+		{
+			/*视野出现*/
+			auto pGameRole = dynamic_cast<GameRole*>(sign);
+			if (pGameRole != this)
+			{
+				ProcVisualAppears(pGameRole);
+			}
+		}
+		
+	}
+
+	/*对坐标的移动进行发送消息*/
+	for (auto sign : aoiw->GetSrdPlayers(this))
+	{
+		pb::BroadCast* ret = new pb::BroadCast();
+		ret->set_pid(pid);
+		ret->set_username(szName);
+		ret->set_tp(4);
+		auto aqPostion = ret->mutable_p();
+		aqPostion->set_x(_x);
+		aqPostion->set_y(_y);
+		aqPostion->set_z(_z);
+		aqPostion->set_v(_v);
+		auto aqPayer = dynamic_cast<GameRole*>(sign);
+		ZinxKernel::Zinx_SendOut(*(new GameMsg(GameMsg::MSG_TYPE_BROADCAST, ret)), *(aqPayer->poProtocol));
+	}
+	
+
+}
+void GameRole::ProcVisualDisaAppears(GameRole* _role)
+{
+	auto pMsg = _role->CreateLogoffName();
+	ZinxKernel::Zinx_SendOut(*pMsg,*poProtocol);
+	pMsg = CreateLogoffName();
+	ZinxKernel::Zinx_SendOut(*pMsg,*(_role->poProtocol));
+}
+void GameRole::ProcVisualAppears(GameRole* _role)
+{
+	auto pMsg = _role->CreateSelfPostion();
+	ZinxKernel::Zinx_SendOut(*pMsg, *poProtocol);
+	pMsg = CreateSelfPostion();
+	ZinxKernel::Zinx_SendOut(*pMsg, *(_role->poProtocol));
+}
 GameMsg* GameRole::CreateLoginIdName()
 {
 	pb::SyncPid* pMsg = new pb::SyncPid();
@@ -14,7 +110,6 @@ GameMsg* GameRole::CreateLoginIdName()
 
 	return new GameMsg(GameMsg::MSG_TYPE_SYNCPID_LOGIN, pMsg);
 }
-
 GameMsg* GameRole::CreateSrdPlayers()
 {
 	pb::SyncPlayers* pret = new pb::SyncPlayers();
@@ -36,7 +131,6 @@ GameMsg* GameRole::CreateSrdPlayers()
 
 	return new GameMsg(GameMsg::MSG_TYPE_SYNCPLAYERS,pret);
 }
-
 GameMsg* GameRole::CreateSelfPostion()
 {
 	pb::BroadCast* ret = new pb::BroadCast();
@@ -51,7 +145,6 @@ GameMsg* GameRole::CreateSelfPostion()
 
 	return new GameMsg(GameMsg::MSG_TYPE_BROADCAST, ret);
 }
-
 GameMsg* GameRole::CreateLogoffName()
 {
 	auto pRet = new pb::SyncPid();
@@ -102,6 +195,24 @@ bool GameRole::Init()
 
 UserData* GameRole::ProcMsg(UserData& _poUserData)
 {
+	GET_REF2DATA(MuiltMsg, _muiltMsg, _poUserData);
+	for (auto _outMsg : _muiltMsg.m_GameMsg_list)
+	{
+		switch (_outMsg->MsgType)
+		{
+		case GameMsg::MSG_TYPE_TALK:
+			ProcChatTalk(dynamic_cast<pb::Talk*>(_outMsg->poMessage)->content());
+			break;
+		case GameMsg::MSG_TYPE_POSITION:
+		{
+			pb::Position* pMsg = dynamic_cast<pb::Position*>(_outMsg->poMessage);
+			ProcNewLocation(pMsg->x(), pMsg->y(), pMsg->z(), pMsg->v());
+			break;
+		}
+			
+		}
+	}
+
 	return nullptr;
 }
 
